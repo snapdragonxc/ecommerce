@@ -13,6 +13,9 @@ const upload = multer({ storage: Storage })
 
 const imageUpload = (req, res, next) => {
   upload(req, res, (uploadErr) => {
+
+    console.log('ee', uploadErr)
+
     if (uploadErr) {
       res.status(500);
       return res.send(uploadErr);
@@ -31,6 +34,7 @@ const imageUpload = (req, res, next) => {
       dstPath: `${IMG_URL + img.substring(0, img.length - 4)}_thb.jpg`,
       width: 256,
     }, (resizeErr) => {
+      console.log('ee', resizeErr)
       if (resizeErr) {
         res.status(500);
         return res.send(resizeErr);
