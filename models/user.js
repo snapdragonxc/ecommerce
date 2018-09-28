@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 // Fix mongoose upgrade warnings
 mongoose.set('useCreateIndex', true);
 // Define User Model
