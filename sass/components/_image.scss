@@ -1,0 +1,23 @@
+.img {
+  overflow: hidden;
+  padding: 0;
+  &__content {
+    width: 100%;
+    border: $border;
+    &--nav:hover {
+      cursor: pointer;
+      filter: brightness(97%);
+    }
+    &--no-border {
+      border: 0;
+    }
+  }
+  &--thb {
+    width: 150px;
+  }
+
+  &--sml {
+    width: 95px;
+  }
+
+}

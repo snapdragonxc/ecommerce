@@ -1,0 +1,12 @@
+.splash {
+  font-size: 1.4rem;
+  letter-spacing: 0.15rem;
+  font-family: 'Arial', sans-serif;
+  line-height: 2;
+  text-align: center;
+  background-color: $silver;
+  border-bottom:  $border;
+  line-height: 3.4;
+  .splash__email {}
+  .splash__phone {}
+}

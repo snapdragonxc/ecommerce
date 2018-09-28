@@ -1,0 +1,18 @@
+.btn {
+  &:link,
+  &:visited {
+    margin: 0;
+    display: block;
+    font-weight: 700;
+    font-size: 12px;
+    height: 43px;
+    line-height: 43px;
+    text-align: center;
+    text-decoration: none;
+    color: $color-grey-dark;
+  }
+  &:hover,
+  &:active {
+    color: $color-grey-light;
+  }
+}

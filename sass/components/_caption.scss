@@ -1,0 +1,21 @@
+
+.caption {
+  text-align: center;
+  &__name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: $color-grey-dark;
+    line-height: 1.5;
+    text-transform: uppercase;
+    margin-top: 1.5rem;
+    margin-bottom: .5rem;
+  }
+  &__price {
+    font-size: 1.6rem;
+    line-height: 1.4;
+  }
+}
+
+.caption--left {
+  text-align: left;
+}

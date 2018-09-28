@@ -1,0 +1,115 @@
+// @flow
+
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { getCart, updateCartItem, deleteCartItem } from '../../actions/cartActions';
+import Cart from './Cart';
+import type { Product } from '../../PropTypes/Shop';
+
+type Item = {
+  product: Product,
+  subTotal: number,
+  qty: number,
+}
+
+type CartContainerState = {
+  items: Array<Item>,
+  total: number,
+  numberItems: number,
+};
+
+type CartContainerProps = {
+  imgs: Array<string>,
+  width: number,
+  height: number,
+  cart: { items: Array<Item>, total: number, numberItems: number },
+  getCart: (callback: () => void) => void,
+  updateCartItem: (item: Item, callback: () => void) => void,
+  deleteCartItem: (item: Item, callback: () => void) => void,
+};
+
+class CartContainer extends Component<CartContainerProps, CartContainerState> {
+  constructor(props: CartContainerProps) {
+    super(props);
+    this.state = {
+      items: [],
+      total: 0,
+      numberItems: 0,
+    };
+    this.addQty = this.addQty.bind(this);
+    this.subQty = this.subQty.bind(this);
+    this.onDelete = this.onDelete.bind(this);
+  }
+
+  componentDidMount() {
+    if (this.props.cart.items.length === 0) {
+      this.props.getCart(() => {
+        const { items, total, numberItems } = this.props.cart;
+        this.setState({ items, total, numberItems });
+      });
+    } else {
+      const { items, total, numberItems } = this.props.cart;
+      this.setState({ items, total, numberItems });
+    }
+  }
+
+  onDelete: (index: number) => void
+
+  onDelete(index) {
+    const item = this.state.items[index];
+    this.props.deleteCartItem(item, () => {
+      const { items, total, numberItems } = this.props.cart;
+      this.setState({ items, total, numberItems });
+    });
+  }
+
+  addQty: (index: number) => void
+
+  addQty(index) {
+    const item = this.state.items[index];
+    item.qty += 1;
+    item.subTotal += item.product.price;
+    this.props.updateCartItem(item, () => {
+      const { items, total, numberItems } = this.props.cart;
+      this.setState({ items, total, numberItems });
+    });
+  }
+
+  subQty: (index: number) => void
+
+  subQty(index) {
+    const item = this.state.items[index];
+    if ((item.qty - 1) > 0) {
+      item.qty -= 1;
+      item.subTotal -= item.product.price;
+      this.props.updateCartItem(item, () => {
+        const { items, total, numberItems } = this.props.cart;
+        this.setState({ items, total, numberItems });
+      });
+    }
+  }
+
+  render() {
+    const { items, total, numberItems } = this.state;
+    return (
+      <Cart
+        items={items}
+        total={total}
+        numberItems={numberItems}
+        addQty={this.addQty}
+        subQty={this.subQty}
+        onDelete={this.onDelete}
+      />
+    );
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  getCart: callback => dispatch(getCart(callback)),
+  updateCartItem: (item, callback) => dispatch(updateCartItem(item, callback)),
+  deleteCartItem: (item, callback) => dispatch(deleteCartItem(item, callback)),
+});
+
+const mapStateToProps = state => ({ cart: state.cart });
+
+export default connect(mapStateToProps, mapDispatchToProps)(CartContainer);

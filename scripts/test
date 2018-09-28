@@ -1,0 +1,12 @@
+#!/bin/bash
+
+echo "Running test"
+
+export CHARM_PORT=3000
+export CHARM_DB_HOST=localhost
+export CHARM_DB_NAME=test
+export CHARM_DB_PORT=27017
+export CHARM_USERNAME=Mark
+export CHARM_PASSWORD=bullpup
+export CHARM_COOKIE_SECRET=abracadabra
+export CHARM_SEED_DB=true

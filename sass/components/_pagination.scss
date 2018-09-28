@@ -1,0 +1,33 @@
+.pagination {
+  margin-top: 3.5rem;
+  list-style-type: none;
+  &__item {
+    display: block;
+    float: left;
+  }
+
+  &__item:not(:first-child) &__box {
+    border-left: 0;
+  }
+
+  &__box {
+    display: inline-block;
+    color: #000;
+    border: $border;
+    font-size: 1.6rem;
+    padding: .8rem 1.6rem;
+    text-decoration: none;
+  }
+
+  &__box.active {
+    background-color: $color-grey-dark;
+    color: #fff;
+    border: $border;
+  }
+
+  &__box:hover {
+    cursor: pointer;
+    background-color: $color-grey-light;
+  }
+
+}

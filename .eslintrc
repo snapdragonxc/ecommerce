@@ -1,0 +1,32 @@
+{
+  "parser": "babel-eslint",
+  "plugins": [
+    "react",
+    "flowtype"
+  ],
+  "rules": {
+    "no-param-reassign": [2, { "props": false }],
+    "react/prop-types": 0,
+    "no-underscore-dangle": [2, { "allow": ["_id"] }],
+    'no-plusplus': [2, { allowForLoopAfterthoughts: true }],
+    "no-control-regex": 0,
+    "no-useless-escape": 0,
+  },
+  settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js','.jsx']
+      }
+    },
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:flowtype/recommended",
+    "airbnb-base"
+  ],
+  "env": {
+      "browser": true,
+      "node": true
+  }
+}

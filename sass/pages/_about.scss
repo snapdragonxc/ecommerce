@@ -1,0 +1,17 @@
+.about {
+  margin-top: 3.5rem;
+  margin-bottom: 5rem;
+  &__p {
+    font-size: 1.4rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: $color-grey-dark;
+    margin-bottom: 1em;
+    &--signed  {
+      color: #111;
+      text-align: right;
+      font-size: 1.6rem;
+      margin-bottom: 0;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+.footer {
+  &__txt {
+    padding: 3rem 0;
+    border-top: $border;
+  }
+  &__title {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #595959;
+    text-align: center;
+    line-height: 1.5rem;
+  }
+}

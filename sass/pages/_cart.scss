@@ -1,0 +1,77 @@
+
+
+.table {
+  &__head { border-bottom: $border; }
+  &__h {
+    margin: 10px 0;
+    line-height: 1;
+    font-size: 12px;
+    color: #595959;
+    font-weight: 700;
+    &--center {
+      text-align: center;
+    }
+  }
+  &__d {
+    margin: 30px 0;
+    &--center {
+      text-align: center;
+    }
+  }
+  &__r { border-bottom: $border; }
+  &__foot {
+    text-align: right;
+    margin: 35px 0;
+    &-subtotal {
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 1;
+      color: #303030;
+      margin: 0;
+      text-transform: uppercase;
+    }
+    &-shipping {
+      margin: 8px 0;
+      font-size: 14px;
+      color: #303030;
+      font-weight: 400;
+    }
+  }
+}
+
+.cart {
+  &__item {
+    font-weight: 400;
+    color: #303030;
+    &-name {
+      font-size: 20px;
+      margin: 0;
+      margin-bottom: 12px;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+    &-sku,
+    &-price {
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1;
+    }
+
+    &-price--big { font-size: 20px; }
+
+    &-delete {
+      display: block;
+      font-size: 12px;
+      text-decoration: underline;
+      color: #595959;
+      margin-top: 70px;
+      &:hover {
+        cursor: pointer;
+      }
+      &-mobile {
+        display: none;
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+
+.widget__spinner {
+    overflow: hidden;
+    display: inline-block;
+    border: 1px solid #ccc;
+}
+.widget__spinner-input {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+    line-height: 35px;
+    float: left;
+    padding: 0;
+    font-family: sans-serif;
+    font-weight: normal;
+    text-transform: uppercase;
+    text-align: center;
+    color: #303030;
+    -webkit-border-radius:0;
+    -webkit-border: 0px solid #ccc;
+    border: 0px solid #ccc;
+    border-radius:0;
+    background: none;
+    outline: none;
+    pointer-events: none;
+}
+.widget__spinner-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+.widget__spinner-sub { border-right: 1px solid #ccc; }
+.widget__spinner-add { border-left: 1px solid #ccc; }
+
+.widget__spinner-sub,
+.widget__spinner-add {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+    line-height: 35px;
+    float: left;
+    display: block;
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: 700;
+    color: #777;
+    cursor: pointer;
+    transition: 0.1s linear;
+    -o-transition: 0.1s linear;
+    -ms-transition: 0.1s linear;
+    -moz-transition: 0.1s linear;
+    -webkit-transition: 0.1s linear;
+}
+.widget__spinner-sub:hover,
+.widget__spinner-add:hover {
+    color: #999;
+}
+
+.widget__spinner-input--small {
+    width: 31px;
+    height: 31px;
+    font-size: 14px;
+    line-height: 31px;
+}
+.widget__spinner-sub--small,
+.widget__spinner-add--small {
+    width: 31px;
+    height: 31px;
+    font-size: 14px;
+    line-height: 31px
+}

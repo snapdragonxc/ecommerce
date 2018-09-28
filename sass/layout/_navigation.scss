@@ -1,0 +1,53 @@
+.nav {
+  list-style-type: none;
+  display: block;
+  font-size: 1.5rem;
+  padding: .6rem 0;
+  border-top: $border;
+  border-bottom: $border;
+  overflow: hidden;
+  &__item {
+    display: block;
+    float: left;
+    &:first-child {
+      //display: none;
+    }
+    &:last-child {
+      float: right;
+      &:before {
+        content: ' '; // don't forget space, otherwise new line.
+        border-left: $border-dark;
+      }
+    }
+  }
+  &__link {
+    display: inline-block;
+    text-decoration: none;
+    padding: 0 3.5rem;
+    line-height: 2;
+    &:link,
+    &:visited {
+      display: inline-block;
+      text-transform: uppercase;
+      color: $color-grey-dark;
+    }
+    &:hover,
+    &:active {
+      color: $color-grey-light;
+    }
+  }
+
+  &__link--left {
+    padding: 0;
+    padding-right: 7rem
+  }
+
+  &__link--right {
+    padding: 0;
+    padding-left: 7rem
+  }
+
+  &__cart {
+    font-size: 22px;
+  }
+}
