@@ -29,6 +29,8 @@ const imageUpload = (req, res, next) => {
       return res.send('Missing image file name');
     }
 
+    console.log('img', img);
+    
     return imagemagick.resize({
       srcPath: IMG_URL + img,
       dstPath: `${IMG_URL + img.substring(0, img.length - 4)}_thb.jpg`,
