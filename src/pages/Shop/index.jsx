@@ -83,7 +83,7 @@ class ShopContainer extends Component<ShopContainerProps, ShopContainerState> {
   handleOptionChange: (event: SyntheticEvent<*>, name: string) => void
 
   handleOptionChange(event, category) {
-    this.setState({ category });
+    this.setState({ category, curPage: 1 });
     this.props.getProducts(category, 1);
   }
 

@@ -11,6 +11,7 @@ type HomeProps = {
   height: number,
   imgs: Array<string>,
   products: Array<Product>,
+  onClickProduct: (string) => void,
 };
 
 const Home = ({
@@ -18,6 +19,7 @@ const Home = ({
   height,
   imgs,
   products,
+  onClickProduct,
 }: HomeProps) => (
   <div className="wrapper">
     <Carousel width={width} height={height} imgs={imgs}/>
@@ -32,6 +34,7 @@ const Home = ({
               price={product.price}
               name={product.name}
               src={IMG_URL + product.img}
+              onClickProduct={onClickProduct}
             />))
         }
         <div className="clearfix"></div>

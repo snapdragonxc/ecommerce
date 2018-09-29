@@ -56,13 +56,14 @@ class DetailContainer extends Component<DetailContainerProps, DetailContainerSta
     this.onSubmit = this.onSubmit.bind(this);
     this.qtySub = this.qtySub.bind(this);
     this.qtyAdd = this.qtyAdd.bind(this);
+    this.onClickBack = this.onClickBack.bind(this);
   }
 
   componentDidMount() {
     const { name } = this.props.match.params;
     const product = this.props.products.find(prod => prod.name === name);
     if (product === undefined) {
-      getProductByName(name, false)
+      getProductByName(name)
         .then((data) => {
           this.setState({ product: data });
         })
@@ -107,6 +108,12 @@ class DetailContainer extends Component<DetailContainerProps, DetailContainerSta
     this.setState({ qty });
   }
 
+  onClickBack: () => void
+
+  onClickBack = () => {
+    this.props.history.goBack();
+  }
+
   render() {
     const { product, qty } = this.state;
     return <Detail
@@ -118,6 +125,7 @@ class DetailContainer extends Component<DetailContainerProps, DetailContainerSta
       onSubmit={this.onSubmit}
       qtySub={this.qtySub}
       qtyAdd={this.qtyAdd}
+      onClickBack={this.onClickBack}
     />;
   }
 }

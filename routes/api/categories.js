@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
         return res.send(error);
       }
       res.status(200);
-      return res.send(category);
+      return res.send(name);
     });
   });
 });
@@ -80,7 +80,7 @@ router.put('/:_id', (req, res) => {
 //router.delete('/:_id', sessionCheck, (req, res) => {
 router.delete('/:_id', (req, res) => {
   const id = req.params._id;
-  Category.remove({ _id: req.params._id }, (err) => {
+  Category.deleteOne({ _id: req.params._id }, (err) => {
     if (err) {
       res.status(500);
       return res.send(err);

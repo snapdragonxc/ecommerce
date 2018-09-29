@@ -48,12 +48,12 @@ class Main extends React.Component {
           <Route exact path="/shop" component={Shop}/>
           <Route path="/shop/:category/:page" component={Shop}/>
           <Route path="/cart" component={Cart} />
-          <Route path="/dashboard/add" component={Edit} username={username}/>
-          <Route path="/dashboard/edit/:id" component={Edit} username={username}/>
-          <Route exact path="/dashboard/products" component={ProductsMng} username={username}/>
-          <Route path="/dashboard/products/:page" component={ProductsMng} username={username}/>
-          <Route path="/dashboard/categories" component={CategoriesMng} username={username}/>
-          <Route path="/signin" component={Signin} login={this.login} username={username} />
+          <AuthRoute path="/dashboard/add" component={Edit} username={username}/>
+          <AuthRoute path="/dashboard/edit/:id" component={Edit} username={username}/>
+          <AuthRoute exact path="/dashboard/products" component={ProductsMng} username={username}/>
+          <AuthRoute path="/dashboard/products/:page" component={ProductsMng} username={username}/>
+          <AuthRoute path="/dashboard/categories" component={CategoriesMng} username={username}/>
+          <RedirectRoute path="/signin" component={Signin} login={this.login} username={username} />
           <Footer />
         </div>
       </BrowserRouter>
@@ -71,14 +71,3 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);
-
-
-
-/*
-<AuthRoute path="/dashboard/add" component={Edit} username={username}/>
-<AuthRoute path="/dashboard/edit/:id" component={Edit} username={username}/>
-<AuthRoute exact path="/dashboard/products" component={ProductsMng} username={username}/>
-<AuthRoute path="/dashboard/products/:page" component={ProductsMng} username={username}/>
-<AuthRoute path="/dashboard/categories" component={CategoriesMng} username={username}/>
-<RedirectRoute path="/signin" component={Signin} login={this.login} username={username} />
-*/

@@ -4,19 +4,16 @@
  * Module dependencies.
  */
 /* eslint-disable */
-
-var env = require('../config');
-
 var app = require('../app');
-var debug = require('debug')('charm3:server');
+var debug = require('debug')('ecommerce:server');
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
 
-//var port = normalizePort(process.env.PORT || '8080');
-var port = env.PORT;
+var port = normalizePort(process.env.PORT || '8080');
+
 app.set('port', port);
 
 /**
@@ -24,7 +21,6 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -93,5 +89,4 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  console.log('Listening on ' + bind);
 }

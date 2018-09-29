@@ -71,7 +71,7 @@ class EditContainer extends Component<EditContainerProps, EditContainerState> {
       description: '',
       price: 0,
       saleprice: 0,
-      inventory: 0,
+      inventory: 1,
       img: '',
       existingImg: '',
       category: '',
@@ -297,11 +297,9 @@ class EditContainer extends Component<EditContainerProps, EditContainerState> {
       onDisplay,
       categories,
       error,
+      inventory,
     } = this.state;
-    let { inventory } = this.state;
-    if (!_id && inventory === 0) {
-      inventory = 1;
-    }
+
     return (
       <Edit
         id={_id}

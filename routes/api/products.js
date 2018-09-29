@@ -1,3 +1,4 @@
+/* eslint-disable */
 const express = require('express');
 const fs = require('fs');
 const Product = require('../../models/product');
@@ -23,7 +24,7 @@ router.post('/', imageUpload, (req, res) => {
   Product.findOne({ name: myproduct.name }, (err, prod) => {
     if (prod !== null) {
       res.status(401);
-      res.send('A product with this name already exists');
+      return res.send('A product with this name already exists');
     }
     const product = new Product(myproduct);
     product.save((error) => {
@@ -145,7 +146,8 @@ router.put('/:_id', imageUpdate, (req, res) => {
 //  router.delete('/:_id', sessionCheck, function(req, res){
 router.delete('/:_id', (req, res) => {
   const { _id } = req.params;
-  let fileError = '';
+  let file = '';
+  let thbfile = '';
   Product.findOne({ _id }).exec((err, product) => {
     if (err) {
       res.status(500);
@@ -159,16 +161,16 @@ router.delete('/:_id', (req, res) => {
       // remove main
       return fs.unlink(IMG_URL + product.img, (imgfileErr) => {
         if (imgfileErr) {
-          fileError = 'image file does not exist';
+          file = 'image file does not exist';
         }
         // remove thb
         const thb = `${product.img.substring(0, product.img.length - 4)}_thb.jpg`;
         return fs.unlink(IMG_URL + thb, (thbFileerr) => {
           if (thbFileerr) {
-            fileError = 'thb image file does not exist';
+            thbFile = 'thb image file does not exist';
           }
           res.status(200);
-          const data = { error: fileError, _id: req.params._id };
+          const data = { file: file, thbFile: thbFile, _id: req.params._id };
           return res.json(data);
         });
       });

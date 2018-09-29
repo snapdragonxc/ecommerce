@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { getDisplayProducts } from '../../actions/productActions';
 import Home from './Home';
 import type { Product } from '../../PropTypes/Shop';
+import type { History } from '../../PropTypes/Router';
 
 type HomeContainerState = {
   width: number,
@@ -15,6 +16,7 @@ type HomeContainerState = {
 type HomeContainerProps = {
   getDisplayProducts: () => void,
   products: Array<Product>,
+  history: History,
 }
 
 class HomeContainer extends Component<HomeContainerProps, HomeContainerState> {
@@ -28,16 +30,31 @@ class HomeContainer extends Component<HomeContainerProps, HomeContainerState> {
         './images/front/slide3.jpg',
       ],
     };
+    this.onClickProduct = this.onClickProduct.bind(this);
   }
 
   componentDidMount() {
     this.props.getDisplayProducts();
   }
 
+  onClickProduct: (id: string) => void
+
+  onClickProduct = (name) => {
+    this.props.history.push(`/detail/${name}`);
+  }
+
   render() {
     const { width, height, imgs } = this.state;
     const { products } = this.props;
-    return <Home width={width} height={height} imgs={imgs} products={products}/>;
+    return (
+      <Home
+        width={width}
+        height={height}
+        imgs={imgs}
+        products={products}
+        onClickProduct={this.onClickProduct}
+      />
+    );
   }
 }
 

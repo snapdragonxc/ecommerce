@@ -13,6 +13,7 @@ type DetailProps = {
   onSubmit: (event: SyntheticEvent<*>) => void,
   qtySub: () => void,
   qtyAdd: () => void,
+  onClickBack: () => void,
 };
 
 const Detail = ({
@@ -24,14 +25,18 @@ const Detail = ({
   onSubmit,
   qtySub,
   qtyAdd,
+  onClickBack,
 }: DetailProps) => (
   <div className="wrapper">
     <section className="detail">
-      <a className="detail__back-link" href="#"><i className="fa fa-angle-left" aria-hidden="true"></i> Go Back</a>
+      <a className="detail__back-link" onClick={() => onClickBack()}><i className="fa fa-angle-left" aria-hidden="true"></i> Go Back</a>
       <div className="row">
           <div className="sm-col-span-12 lg-col-span-7">
             <div className="img">
-              <img className="img__content" src={IMG_URL + src}/>
+              {
+                src
+                && <img className="img__content" src={IMG_URL + src}/>
+              }
             </div>
           </div>
           <div className="sm-col-span-12 lg-col-span-5">

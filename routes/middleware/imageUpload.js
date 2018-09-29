@@ -5,7 +5,8 @@ const IMG_URL = './public/images/products/';
 
 const Storage = multer.diskStorage({
   destination: (req, file, callback) => callback(null, IMG_URL),
-  filename: (req, file, callback) => callback(null, `${Date.now()}_${file.originalname}`),
+//  filename: (req, file, callback) => callback(null, `${Date.now()}_${file.originalname}`),
+  filename: (req, file, callback) => callback(null, file.originalname),
 });
 
 const upload = multer({ storage: Storage })
@@ -13,9 +14,6 @@ const upload = multer({ storage: Storage })
 
 const imageUpload = (req, res, next) => {
   upload(req, res, (uploadErr) => {
-
-    console.log('ee', uploadErr)
-
     if (uploadErr) {
       res.status(500);
       return res.send(uploadErr);
@@ -29,14 +27,11 @@ const imageUpload = (req, res, next) => {
       return res.send('Missing image file name');
     }
 
-    console.log('img', img);
-    
     return imagemagick.resize({
       srcPath: IMG_URL + img,
       dstPath: `${IMG_URL + img.substring(0, img.length - 4)}_thb.jpg`,
       width: 256,
     }, (resizeErr) => {
-      console.log('ee', resizeErr)
       if (resizeErr) {
         res.status(500);
         return res.send(resizeErr);

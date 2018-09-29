@@ -41969,12 +41969,12 @@ var Main = function (_React$Component) {
           _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/shop', component: _Shop2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/shop/:category/:page', component: _Shop2.default }),
           _react2.default.createElement(_reactRouterDom.Route, { path: '/cart', component: _Cart2.default }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/dashboard/add', component: _Edit2.default, username: username }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/dashboard/edit/:id', component: _Edit2.default, username: username }),
-          _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/dashboard/products', component: _ProductsMng2.default, username: username }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/dashboard/products/:page', component: _ProductsMng2.default, username: username }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/dashboard/categories', component: _CategoriesMng2.default, username: username }),
-          _react2.default.createElement(_reactRouterDom.Route, { path: '/signin', component: _Signin2.default, login: this.login, username: username }),
+          _react2.default.createElement(_authRoute2.default, { path: '/dashboard/add', component: _Edit2.default, username: username }),
+          _react2.default.createElement(_authRoute2.default, { path: '/dashboard/edit/:id', component: _Edit2.default, username: username }),
+          _react2.default.createElement(_authRoute2.default, { exact: true, path: '/dashboard/products', component: _ProductsMng2.default, username: username }),
+          _react2.default.createElement(_authRoute2.default, { path: '/dashboard/products/:page', component: _ProductsMng2.default, username: username }),
+          _react2.default.createElement(_authRoute2.default, { path: '/dashboard/categories', component: _CategoriesMng2.default, username: username }),
+          _react2.default.createElement(_redirectRoute2.default, { path: '/signin', component: _Signin2.default, login: this.login, username: username }),
           _react2.default.createElement(_Footer2.default, null)
         )
       );
@@ -42004,12 +42004,15 @@ var mapStateToProps = function mapStateToProps(state) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Main);
 
 /*
-<AuthRoute path="/dashboard/add" component={Edit} username={username}/>
-<AuthRoute path="/dashboard/edit/:id" component={Edit} username={username}/>
-<AuthRoute exact path="/dashboard/products" component={ProductsMng} username={username}/>
-<AuthRoute path="/dashboard/products/:page" component={ProductsMng} username={username}/>
-<AuthRoute path="/dashboard/categories" component={CategoriesMng} username={username}/>
-<RedirectRoute path="/signin" component={Signin} login={this.login} username={username} />
+
+*/
+/*
+<Route path="/dashboard/add" component={Edit} username={username}/>
+<Route path="/dashboard/edit/:id" component={Edit} username={username}/>
+<Route exact path="/dashboard/products" component={ProductsMng} username={username}/>
+<Route path="/dashboard/products/:page" component={ProductsMng} username={username}/>
+<Route path="/dashboard/categories" component={CategoriesMng} username={username}/>
+<Route path="/signin" component={Signin} login={this.login} username={username} />
 */
 
 /***/ }),
@@ -42856,7 +42859,8 @@ var Detail = function Detail(_ref) {
       qty = _ref.qty,
       onSubmit = _ref.onSubmit,
       qtySub = _ref.qtySub,
-      qtyAdd = _ref.qtyAdd;
+      qtyAdd = _ref.qtyAdd,
+      onClickBack = _ref.onClickBack;
   return _react2.default.createElement(
     'div',
     { className: 'wrapper' },
@@ -42865,7 +42869,9 @@ var Detail = function Detail(_ref) {
       { className: 'detail' },
       _react2.default.createElement(
         'a',
-        { className: 'detail__back-link', href: '#' },
+        { className: 'detail__back-link', onClick: function onClick() {
+            return onClickBack();
+          } },
         _react2.default.createElement('i', { className: 'fa fa-angle-left', 'aria-hidden': 'true' }),
         ' Go Back'
       ),
@@ -42878,7 +42884,7 @@ var Detail = function Detail(_ref) {
           _react2.default.createElement(
             'div',
             { className: 'img' },
-            _react2.default.createElement('img', { className: 'img__content', src: _constants.IMG_URL + src })
+            src && _react2.default.createElement('img', { className: 'img__content', src: _constants.IMG_URL + src })
           )
         ),
         _react2.default.createElement(
@@ -43012,6 +43018,10 @@ var DetailContainer = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (DetailContainer.__proto__ || Object.getPrototypeOf(DetailContainer)).call(this, props));
 
+    _this.onClickBack = function () {
+      _this.props.history.goBack();
+    };
+
     _this.state = {
       product: {
         _id: '',
@@ -43030,6 +43040,7 @@ var DetailContainer = function (_Component) {
     _this.onSubmit = _this.onSubmit.bind(_this);
     _this.qtySub = _this.qtySub.bind(_this);
     _this.qtyAdd = _this.qtyAdd.bind(_this);
+    _this.onClickBack = _this.onClickBack.bind(_this);
     return _this;
   }
 
@@ -43044,7 +43055,7 @@ var DetailContainer = function (_Component) {
         return prod.name === name;
       });
       if (product === undefined) {
-        (0, _productService.getProductByName)(name, false).then(function (data) {
+        (0, _productService.getProductByName)(name).then(function (data) {
           _this2.setState({ product: data });
         }).catch(function (err) {
           _this2.setState({ error: err });
@@ -43102,7 +43113,8 @@ var DetailContainer = function (_Component) {
         qty: qty,
         onSubmit: this.onSubmit,
         qtySub: this.qtySub,
-        qtyAdd: this.qtyAdd
+        qtyAdd: this.qtyAdd,
+        onClickBack: this.onClickBack
       });
     }
   }]);
@@ -43503,7 +43515,7 @@ var EditContainer = function (_Component) {
       description: '',
       price: 0,
       saleprice: 0,
-      inventory: 0,
+      inventory: 1,
       img: '',
       existingImg: '',
       category: '',
@@ -43623,6 +43635,8 @@ var EditContainer = function (_Component) {
         var fileUpload = file || '';
         productData.append('imgUploader', fileUpload); // don't stringify file
       }
+
+      console.log('sm', this.state);
       productData.append('name', name);
       productData.append('description', description);
       productData.append('category', category);
@@ -43730,12 +43744,10 @@ var EditContainer = function (_Component) {
           category = _state3.category,
           onDisplay = _state3.onDisplay,
           categories = _state3.categories,
-          error = _state3.error;
-      var inventory = this.state.inventory;
+          error = _state3.error,
+          inventory = _state3.inventory;
 
-      if (!_id && inventory === 0) {
-        inventory = 1;
-      }
+
       return _react2.default.createElement(_Edit2.default, {
         id: _id,
         onChange: this.handleChange,
@@ -43932,7 +43944,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Featured = function Featured(_ref) {
   var name = _ref.name,
       src = _ref.src,
-      price = _ref.price;
+      price = _ref.price,
+      onClickProduct = _ref.onClickProduct;
   return _react2.default.createElement(
     "div",
     { className: "sm-col-span-12 lg-col-span-4" },
@@ -43941,7 +43954,9 @@ var Featured = function Featured(_ref) {
       { className: "figure" },
       _react2.default.createElement(
         "div",
-        { className: "img" },
+        { className: "img", onClick: function onClick() {
+            return onClickProduct(name);
+          } },
         _react2.default.createElement("img", { className: "img__content img__content--nav", src: src, alt: "none set" })
       ),
       _react2.default.createElement(
@@ -44001,7 +44016,8 @@ var Home = function Home(_ref) {
   var width = _ref.width,
       height = _ref.height,
       imgs = _ref.imgs,
-      products = _ref.products;
+      products = _ref.products,
+      onClickProduct = _ref.onClickProduct;
   return _react2.default.createElement(
     'div',
     { className: 'wrapper' },
@@ -44023,7 +44039,8 @@ var Home = function Home(_ref) {
             key: index,
             price: product.price,
             name: product.name,
-            src: _constants.IMG_URL + product.img
+            src: _constants.IMG_URL + product.img,
+            onClickProduct: onClickProduct
           });
         }),
         _react2.default.createElement('div', { className: 'clearfix' })
@@ -44080,11 +44097,16 @@ var HomeContainer = function (_Component) {
 
     var _this = _possibleConstructorReturn(this, (HomeContainer.__proto__ || Object.getPrototypeOf(HomeContainer)).call(this, props));
 
+    _this.onClickProduct = function (name) {
+      _this.props.history.push('/detail/' + name);
+    };
+
     _this.state = {
       width: 938,
       height: 438,
       imgs: ['./images/front/slide1.jpg', './images/front/slide2.jpg', './images/front/slide3.jpg']
     };
+    _this.onClickProduct = _this.onClickProduct.bind(_this);
     return _this;
   }
 
@@ -44102,7 +44124,13 @@ var HomeContainer = function (_Component) {
           imgs = _state.imgs;
       var products = this.props.products;
 
-      return _react2.default.createElement(_Home2.default, { width: width, height: height, imgs: imgs, products: products });
+      return _react2.default.createElement(_Home2.default, {
+        width: width,
+        height: height,
+        imgs: imgs,
+        products: products,
+        onClickProduct: this.onClickProduct
+      });
     }
   }]);
 
@@ -44270,7 +44298,7 @@ var ProductsMng = function ProductsMng(_ref) {
                   _react2.default.createElement(
                     'div',
                     { className: 'img img--sml' },
-                    _react2.default.createElement('img', { className: 'img__content', src: _constants.IMG_URL + img })
+                    _react2.default.createElement('img', { className: 'img__content', src: _constants.IMG_URL + img.slice(0, -4) + '_thb.jpg' })
                   )
                 ),
                 _react2.default.createElement(
@@ -44930,7 +44958,7 @@ var ShopContainer = function (_Component) {
   }, {
     key: 'handleOptionChange',
     value: function handleOptionChange(event, category) {
-      this.setState({ category: category });
+      this.setState({ category: category, curPage: 1 });
       this.props.getProducts(category, 1);
     }
   }, {
@@ -45826,7 +45854,7 @@ exports.default = RedirectRoute;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! babel-polyfill */"./node_modules/babel-polyfill/lib/index.js");
-module.exports = __webpack_require__(/*! /home/mark/Desktop/Ecommerce_2/src/app.jsx */"./src/app.jsx");
+module.exports = __webpack_require__(/*! /home/mark/Desktop/ecommerce/src/app.jsx */"./src/app.jsx");
 
 
 /***/ })
