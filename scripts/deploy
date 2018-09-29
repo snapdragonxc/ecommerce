@@ -1,0 +1,15 @@
+#!/bin/bash
+
+echo 'pulling files from github'
+cd ./ecommerce
+git pull origin master
+npm install
+export NODE_ENV=development
+export PORT=8080
+export DB_HOST=localhost
+export DB_NAME=development
+export DB_PORT=27017
+export DB_SEED=true
+export USERNAME=Mark
+export PASSWORD=bullpup
+export COOKIE_SECRET=abracadabra
