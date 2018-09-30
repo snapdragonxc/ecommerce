@@ -40,7 +40,7 @@ describe('User api tests', () => {
     })
 
     // sign in as admin user
-  /*  it('can login a user ', (done) => {
+    it('can login a user ', (done) => {
       server.post('/api/users/login')
           .send(myuser)
           .end(function(err, res) {
@@ -59,10 +59,9 @@ describe('User api tests', () => {
                 expect(res.text).to.equal('User logged out');
                 done();
             });
-    }); */
+    });
   });
 
-/*
   describe('Login a user', function(){
     it('clean database', (done) => {
       User.deleteMany().exec()
@@ -100,6 +99,4 @@ describe('User api tests', () => {
           });
     });
   });
-*/
-
 });
