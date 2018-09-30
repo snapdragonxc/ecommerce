@@ -1,5 +1,5 @@
 /* eslint-disable */
-
+/*
 var request = require('supertest');
 
 var app = require('../app');
@@ -109,3 +109,4 @@ describe('Products api tests', () => {
   });
 
 });
+*/
