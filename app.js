@@ -56,7 +56,7 @@ db.on('connected', function(){
     }).then((name) => {
       debug(`Created new user ${name}`);
     }).catch((err) => {
-      debug('Error in creating user': err);
+      debug(`Error in creating user ${err}`);
     })
     seedDb();
   }
