@@ -32,8 +32,8 @@ describe('User api tests', () => {
         password: hash,
       });
       user.save(function(err){
-        if( err ){ done(err) }
-        done();
+        if( err ){ return done(err) }
+        return done();
       })
     });
     // sign in as admin user
