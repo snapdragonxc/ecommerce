@@ -9,8 +9,8 @@ const imageUpload = require('../middleware/imageUpload');
 const router = express.Router();
 const IMG_URL = './public/images/products/';
 
-//router.post('/', sessionCheck, imageUpload, (req, res) => {
-router.post('/', imageUpload, (req, res) => {
+router.post('/', sessionCheck, imageUpload, (req, res) => {
+//router.post('/', imageUpload, (req, res) => {
   const myproduct = {
     name: req.body.name,
     description: req.body.description,
@@ -115,8 +115,8 @@ router.get('/:category/:page', (req, res) => {
   });
 });
 
-//  router.put('/:_id', sessionCheck, function(req, res){
-router.put('/:_id', imageUpdate, (req, res) => {
+router.put('/:_id', sessionCheck, imageUpdate, function(req, res){
+//router.put('/:_id', imageUpdate, (req, res) => {
   const { _id } = req.params;
   Product.findOneAndUpdate(
     { _id }, {
@@ -143,8 +143,8 @@ router.put('/:_id', imageUpdate, (req, res) => {
   );
 });
 
-//  router.delete('/:_id', sessionCheck, function(req, res){
-router.delete('/:_id', (req, res) => {
+router.delete('/:_id', sessionCheck, function(req, res){
+//router.delete('/:_id', (req, res) => {
   const { _id } = req.params;
   let file = '';
   let thbfile = '';

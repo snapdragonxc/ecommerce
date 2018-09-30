@@ -12,8 +12,17 @@ var seedDb = require('./seedDb');
 var indexRouter = require('./routes/index');
 var apiRouter = require('./routes/api');
 var debug = require('debug')('ecommerce:database');
+var bodyParser = require("body-parser");
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
+var User = require('./models/user');
 //
 var app = express();
+
+
+app.use(bodyParser.json()); // gives req.body
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Mongoose start
 let connect_main = '';
@@ -37,7 +46,14 @@ db.on('error', function(){
 db.on('connected', function(){
   debug(`# MongoDB - connected to: ${process.env.DB_NAME}`);
   if (process.env.DB_SEED === 'true') {
-    seedDbUser({name: process.env.USERNAME, password: process.env.PASSWORD});
+    seedDbUser({
+      name: process.env.USERNAME,
+      password: process.env.PASSWORD
+    }).then((name) => {
+      debug(`Created new user ${name}`);
+    }).catch((err) => {
+      debug(err);
+    })
     seedDb();
   }
 });
@@ -67,6 +83,39 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
+
+
+// Passport setup
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username.toLowerCase() }, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+app.use(passport.initialize());
+
+app.use(passport.session());
+
+// end passport setup
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

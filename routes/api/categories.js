@@ -1,11 +1,12 @@
+/* eslint-disable */
 const express = require('express');
 const Category = require('../../models/category');
 const sessionCheck = require('../middleware/authentication');
 
 const router = express.Router();
 
-//router.post('/', sessionCheck, (req, res) => {
-router.post('/', (req, res) => {
+router.post('/', sessionCheck, (req, res) => {
+//router.post('/', (req, res) => {
   let { name } = req.body;
   if (name) {
     name = name.toLowerCase();
@@ -60,8 +61,8 @@ router.get('/name/:name', (req, res) => {
   });
 });
 
-//router.put('/:_id', sessionCheck, (req, res) => {
-router.put('/:_id', (req, res) => {
+router.put('/:_id', sessionCheck, (req, res) => {
+//router.put('/:_id', (req, res) => {
   Category.findOneAndUpdate({ _id: req.params._id },
     {
       $set: { name: req.body.name.toLowerCase() },
@@ -77,8 +78,8 @@ router.put('/:_id', (req, res) => {
     });
 });
 
-//router.delete('/:_id', sessionCheck, (req, res) => {
-router.delete('/:_id', (req, res) => {
+router.delete('/:_id', sessionCheck, (req, res) => {
+//router.delete('/:_id', (req, res) => {
   const id = req.params._id;
   Category.deleteOne({ _id: req.params._id }, (err) => {
     if (err) {

@@ -3,7 +3,7 @@ import React from 'react';
 const Signin = ({
   handleInputChange,
   handleSubmit,
-  name,
+  username,
   password,
 }) => (
   <div>
@@ -11,10 +11,10 @@ const Signin = ({
       <label>Name:</label>
       <input
         type="text"
-        value={name}
+        value={username}
         placeholder="Username"
         onChange={handleInputChange}
-        name="name"
+        name="username"
       />
       <br />
       <label>Password:</label>

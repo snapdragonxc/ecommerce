@@ -12,6 +12,8 @@ var expect  = require('chai').expect;
 
 var categories = require('../mock/category');
 
+var bcrypt = require('bcryptjs');
+
 // setup server
 var server = request.agent(app);
 
@@ -42,11 +44,16 @@ describe('Categories api delete tests', () => {
     });
 
     var admin = {
-      name: 'admin',
+      username: 'admin',
       password: 'password'
     }
     it('seed User database with admin user', (done) => {
-      var user = new User(admin);
+      var salt = bcrypt.genSaltSync(10);
+      var hash = bcrypt.hashSync(admin.password, salt);
+      var user = new User({
+        username: admin.username.toLowerCase(),
+        password: hash,
+      });
       user.save(function(err){
         if( err ){ done(err) }
         done();
@@ -59,7 +66,7 @@ describe('Categories api delete tests', () => {
           .end(function(err, res) {
               if (err) return done(err);
               expect(res.status).to.equal(200);
-              expect(res.body.name).to.equal('admin');
+              expect(res.body.username).to.equal('admin');
               done();
           });
     });

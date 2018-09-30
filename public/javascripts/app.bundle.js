@@ -40380,7 +40380,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-function loginUser(name, password) {
+function loginUser(username, password) {
   var _this = this;
 
   return function () {
@@ -40392,12 +40392,12 @@ function loginUser(name, password) {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return _axios2.default.post('/api/users/login', { name: name, password: password });
+              return _axios2.default.post('/api/users/login', { username: username, password: password });
 
             case 3:
               response = _context.sent;
 
-              dispatch({ type: _constants.LOGIN, username: response.data.name });
+              dispatch({ type: _constants.LOGIN, username: response.data.username });
               _context.next = 10;
               break;
 
@@ -41946,8 +41946,8 @@ var Main = function (_React$Component) {
 
   _createClass(Main, [{
     key: 'login',
-    value: function login(name, password) {
-      this.props.loginUser(name, password);
+    value: function login(username, password) {
+      this.props.loginUser(username, password);
     }
   }, {
     key: 'render',
@@ -42002,18 +42002,6 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Main);
-
-/*
-
-*/
-/*
-<Route path="/dashboard/add" component={Edit} username={username}/>
-<Route path="/dashboard/edit/:id" component={Edit} username={username}/>
-<Route exact path="/dashboard/products" component={ProductsMng} username={username}/>
-<Route path="/dashboard/products/:page" component={ProductsMng} username={username}/>
-<Route path="/dashboard/categories" component={CategoriesMng} username={username}/>
-<Route path="/signin" component={Signin} login={this.login} username={username} />
-*/
 
 /***/ }),
 
@@ -43635,8 +43623,6 @@ var EditContainer = function (_Component) {
         var fileUpload = file || '';
         productData.append('imgUploader', fileUpload); // don't stringify file
       }
-
-      console.log('sm', this.state);
       productData.append('name', name);
       productData.append('description', description);
       productData.append('category', category);
@@ -45077,7 +45063,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Signin = function Signin(_ref) {
   var handleInputChange = _ref.handleInputChange,
       handleSubmit = _ref.handleSubmit,
-      name = _ref.name,
+      username = _ref.username,
       password = _ref.password;
   return _react2.default.createElement(
     "div",
@@ -45092,10 +45078,10 @@ var Signin = function Signin(_ref) {
       ),
       _react2.default.createElement("input", {
         type: "text",
-        value: name,
+        value: username,
         placeholder: "Username",
         onChange: handleInputChange,
-        name: "name"
+        name: "username"
       }),
       _react2.default.createElement("br", null),
       _react2.default.createElement(
@@ -45166,7 +45152,7 @@ var SigninContainer = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (SigninContainer.__proto__ || Object.getPrototypeOf(SigninContainer)).call(this, props));
 
     _this.state = {
-      name: '',
+      username: '',
       password: ''
     };
     _this.handleInputChange = _this.handleInputChange.bind(_this);
@@ -45184,21 +45170,21 @@ var SigninContainer = function (_React$Component) {
     value: function handleSubmit(event) {
       event.preventDefault();
       var _state = this.state,
-          name = _state.name,
+          username = _state.username,
           password = _state.password;
 
-      this.props.login(name, password);
-      this.setState({ name: '', password: '' });
+      this.props.login(username, password);
+      this.setState({ username: '', password: '' });
     }
   }, {
     key: 'render',
     value: function render() {
       var _state2 = this.state,
-          name = _state2.name,
+          username = _state2.username,
           password = _state2.password;
 
       return _react2.default.createElement(_Signin2.default, {
-        name: name,
+        username: username,
         password: password,
         handleInputChange: this.handleInputChange,
         handleSubmit: this.handleSubmit

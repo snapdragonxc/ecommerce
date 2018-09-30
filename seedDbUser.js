@@ -1,17 +1,26 @@
+/* eslint-disable */
+const bcrypt = require('bcryptjs');
 const User = require('./models/user');
 
 module.exports = ({ name, password }) => (
   new Promise((resolve, reject) => {
-    User.findOneAndUpdate({
-      name: name.toLowerCase(),
-      password,
-    }, {}, { upsert: true },
-    (err) => {
-      if (err) {
-        reject(err);
-      } else {
-        resolve({ name, password });
-      }
-    });
+      User.findOne({ username: name }, function (err, usr) {
+        if (usr !== null) {
+          reject('A user with this name already exists');
+        }
+        const salt = bcrypt.genSaltSync(10);
+        const hash = bcrypt.hashSync(password, salt);
+        const user = new User({
+          username: name.toLowerCase(),
+          password: hash,
+        });
+
+        user.save((error) => {
+          if (!error) {
+            resolve(name);
+          }
+          reject(err);
+        });
+      });
   })
 );

@@ -10,6 +10,8 @@ var expect  = require("chai").expect;
 
 var server = request.agent(app);
 
+var bcrypt = require('bcryptjs');
+
 describe('User api tests', () => {
 
   describe('Logout a user', () => {
@@ -19,11 +21,16 @@ describe('User api tests', () => {
       .catch( (err) => done(err) );
     })
     var myuser = {
-      name: 'myuser',
+      username: 'myuser',
       password: 'mypassword'
     }
     it('seed User database with user', (done) => {
-      var user = new User(myuser);
+      var salt = bcrypt.genSaltSync(10);
+      var hash = bcrypt.hashSync(myuser.password, salt);
+      var user = new User({
+        username: myuser.username.toLowerCase(),
+        password: hash,
+      });
       user.save(function(err){
         if( err ){ done(err) }
         done();
@@ -36,7 +43,7 @@ describe('User api tests', () => {
           .end(function(err, res) {
               if (err) return done(err);
               expect(res.status).to.equal(200);
-              expect(res.body.name).to.equal('myuser');
+              expect(res.body.username).to.equal('myuser');
               done();
           });
     });
@@ -52,19 +59,26 @@ describe('User api tests', () => {
     });
   });
 
+
   describe('Login a user', function(){
     it('clean database', (done) => {
-      User.remove({}).exec()
+      User.deleteMany().exec()
       .then( () => done() )
       .catch( (err) => done(err) );
     })
 
     var myuser = {
-      name: 'myuser',
+      username: 'myuser',
       password: 'mypassword'
     }
     it('seed User database with admin user', (done) => {
-      var user = new User(myuser);
+      var salt = bcrypt.genSaltSync(10);
+      var hash = bcrypt.hashSync(myuser.password, salt);
+      var user = new User({
+        username: myuser.username.toLowerCase(),
+        password: hash,
+      });
+
       user.save(function(err){
         if( err ){ done(err) }
         done();
@@ -75,61 +89,12 @@ describe('User api tests', () => {
       server.post('/api/users/login')
           .send(myuser)
           .end(function(err, res) {
+            console.log('rr', err, res.body)
               if (err) return done(err);
               expect(res.status).to.equal(200);
-              expect(res.body.name).to.equal('myuser');
+              expect(res.body.username).to.equal('myuser');
               done();
           });
-    });
-  });
-
-  describe('Register a new user', function(){
-    it('clean database', (done) => {
-      User.remove({}).exec()
-      .then( () => done() )
-      .catch( (err) => done(err) );
-    })
-
-    var user = {
-      name: 'myname',
-      password: 'mypassword'
-    }
-    var admin = {
-      name: 'admin',
-      password: 'password'
-    }
-    it('seed User database with admin user', (done) => {
-      var user = new User(admin);
-      user.save(function(err){
-        if( err ){ done(err) }
-        done();
-      })
-    });
-    // sign in as admin user
-    it('can login as an admin user ', (done) => {
-      server.post('/api/users/login')
-          .send(admin)
-          .end(function(err, res) {
-              if (err) return done(err);
-              expect(res.status).to.equal(200);
-              expect(res.body.name).to.equal('admin');
-              done();
-          });
-    });
-
-    it('admin user can register a new user', (done) => {
-      server.post('/api/users/register')
-            .send(user)
-            .end(function(err, res){
-              if (err) return done(err);
-              expect(res.status).to.equal(200);
-              expect(res.text).to.equal('myname');
-              User.findOne({name: 'myname'}, function(err, usr){
-                expect(usr.name).to.equal('myname');
-                expect(usr.password).to.equal('mypassword')
-              });
-              done();
-            });
     });
   });
 

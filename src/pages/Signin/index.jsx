@@ -6,7 +6,7 @@ class SigninContainer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      username: '',
       password: '',
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -21,16 +21,16 @@ class SigninContainer extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    const { name, password } = this.state;
-    this.props.login(name, password);
-    this.setState({ name: '', password: '' });
+    const { username, password } = this.state;
+    this.props.login(username, password);
+    this.setState({ username: '', password: '' });
   }
 
   render() {
-    const { name, password } = this.state;
+    const { username, password } = this.state;
     return (
       <Signin
-        name={name}
+        username={username}
         password={password}
         handleInputChange={this.handleInputChange}
         handleSubmit={this.handleSubmit}

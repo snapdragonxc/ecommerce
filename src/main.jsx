@@ -30,8 +30,8 @@ class Main extends React.Component {
     this.login = this.login.bind(this);
   }
 
-  login(name, password) {
-    this.props.loginUser(name, password);
+  login(username, password) {
+    this.props.loginUser(username, password);
   }
 
   render() {
