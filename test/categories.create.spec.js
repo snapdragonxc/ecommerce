@@ -27,9 +27,7 @@ describe('Categories api create tests', () => {
     });
     it('clean Category database', (done) => {
       Category.deleteMany().exec()
-      .then( () => {
-        done()
-      })
+      .then( () => done())
       .catch( (err) => done(err) );
     });
 
@@ -147,7 +145,5 @@ describe('Categories api create tests', () => {
               });
             });
     });
-
   });
-
 });
