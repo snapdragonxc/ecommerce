@@ -23,12 +23,12 @@ describe('Categories api create tests', () => {
     it('clean User database', (done) => {
       User.deleteMany().exec()
       .then( () => done() )
-      .catch( (err) => done(err) );
+      .catch( err => done(err));
     });
     it('clean Category database', (done) => {
       Category.deleteMany().exec()
       .then( () => done())
-      .catch( (err) => done(err) );
+      .catch( err => done(err) );
     });
 
     var admin = {
@@ -43,8 +43,8 @@ describe('Categories api create tests', () => {
         password: hash,
       });
       user.save(function(err){
-        if( err ){ done(err) }
-        done();
+        if( err ){ return done(err) }
+        return done();
       })
     });
     // sign in as admin user
@@ -82,14 +82,12 @@ describe('Categories api create tests', () => {
     it('clean User database', (done) => {
       User.deleteMany().exec()
       .then( () => done() )
-      .catch( (err) => done(err) );
+      .catch( err => done(err));
     });
     it('clean Category database', (done) => {
       Category.deleteMany().exec()
-      .then( () => {
-        done()
-      })
-      .catch( (err) => done(err) );
+      .then( () => done())
+      .catch( err => done(err) );
     });
 
     var mycategory = {
@@ -99,8 +97,8 @@ describe('Categories api create tests', () => {
     it('seed database with category', (done) => {
       var category = new Category( mycategory );
       category.save(function(err, cat){
-          if( err ){ done(err) }
-          done();
+          if( err ){ return done(err) }
+          return done();
       })
     });
 
@@ -116,8 +114,8 @@ describe('Categories api create tests', () => {
         password: hash,
       });
       user.save(function(err){
-        if( err ){ done(err) }
-        done();
+        if( err ){ return done(err) }
+        return done();
       })
     });
     // sign in as admin user
@@ -141,7 +139,7 @@ describe('Categories api create tests', () => {
               expect(res.text).to.equal('A category with this name already exists');
               Category.findOne({name: 'mycategory'}, function(err, cat){
                 expect(cat.name).to.equal('mycategory');
-                done();
+                return done();
               });
             });
     });
