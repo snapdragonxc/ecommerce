@@ -26,18 +26,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Mongoose start
 let envn = process.env;
-let connect_main =
-`mongodb://${envn.DB_USERNAME}:${envn.DB_PASSWORD}@${envn.DB_HOST}:${envn.DB_PORT}/${envn.DB_NAME}`;
-let connect_session =
+let connect =
 `mongodb://${envn.DB_USERNAME}:${envn.DB_PASSWORD}@${envn.DB_HOST}:${envn.DB_PORT}/${envn.DB_NAME}`;
 
 if ((process.env.NODE_ENV === 'development') || (process.env.NODE_ENV === 'test')) {
-  connect_main = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
-  connect_session = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/connect_mongodb_session`;
+  connect = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 }
 
 // Connect
-mongoose.connect(connect_main, { useNewUrlParser: true });
+mongoose.connect(connect, { useNewUrlParser: true });
 
 // Fix mongoose upgrade warnings
 mongoose.set('useFindAndModify', false);
@@ -56,14 +53,14 @@ db.on('connected', function(){
     }).then((name) => {
       debug(`Created new user ${name}`);
     }).catch((err) => {
-      debug(`Error in creating user ${err}`);
+      debug(err);
     })
     seedDb();
   }
 });
 
 var store = new MongoDBStore({
-  uri: connect_session,
+  uri: connect,
   collection: 'mySessions'
 });
 

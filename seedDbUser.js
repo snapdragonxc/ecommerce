@@ -4,7 +4,7 @@ const User = require('./models/user');
 
 module.exports = ({ name, password }) => (
   new Promise((resolve, reject) => {
-      User.findOne({ username: name }, function (err, usr) {
+      User.findOne({ username: name.toLowerCase() }, function (err, usr) {
         if (usr !== null) {
           reject('A user with this name already exists');
         }
@@ -19,7 +19,7 @@ module.exports = ({ name, password }) => (
           if (!error) {
             resolve(name);
           }
-          reject(err);
+          reject(`Error: ${err}`);
         });
       });
   })
