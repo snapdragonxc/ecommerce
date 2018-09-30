@@ -15,27 +15,30 @@ var bcrypt = require('bcryptjs');
 describe('User api tests', () => {
 
   describe('Logout a user', () => {
-    it('clean database', (done) => {
-      User.remove({}).exec()
-      .then( () => done() )
-      .catch( (err) => done(err) );
-    })
+
     var myuser = {
       username: 'myuser',
       password: 'mypassword'
     }
-    it('seed User database with user', (done) => {
-      var salt = bcrypt.genSaltSync(10);
-      var hash = bcrypt.hashSync(myuser.password, salt);
-      var user = new User({
-        username: myuser.username.toLowerCase(),
-        password: hash,
+
+    it('clean database', (done) => {
+      User.deleteMany({}, function (err) {
+        if (err) {
+          return done(err);
+        }
+        var salt = bcrypt.genSaltSync(10);
+        var hash = bcrypt.hashSync(myuser.password, salt);
+        var user = new User({
+          username: myuser.username.toLowerCase(),
+          password: hash,
+        });
+        user.save(function(err){
+          if( err ){ return done(err) }
+          return done();
+        })
       });
-      user.save(function(err){
-        if( err ){ return done(err) }
-        return done();
-      })
-    });
+    })
+
     // sign in as admin user
     it('can login a user ', (done) => {
       server.post('/api/users/login')
