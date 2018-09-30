@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 let envn = process.env;
 let connect_main =
 `mongodb://${envn.DB_USERNAME}:${envn.DB_PASSWORD}@${envn.DB_HOST}:${envn.DB_PORT}/${envn.DB_NAME}`;
-let connect_session = '';
+let connect_session = 
 `mongodb://${envn.DB_USERNAME}:${envn.DB_PASSWORD}@${envn.DB_HOST}:${envn.DB_PORT}/${envn.DB_NAME}`;
 
 if ((process.env.NODE_ENV === 'development') || (process.env.NODE_ENV === 'test')) {
