@@ -25,9 +25,13 @@ app.use(bodyParser.json()); // gives req.body
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Mongoose start
-let connect_main = '';
+let envn = process.env;
+let connect_main =
+`mongodb://${envn.DB_USERNAME}:${envn.DB_PASSWORD}@${envn.DB_HOST}:${envn.DB_PORT}/${envn.DB_NAME}`;
 let connect_session = '';
-if (process.env.NODE_ENV !== 'production') {
+`mongodb://${envn.DB_USERNAME}:${envn.DB_PASSWORD}@${envn.DB_HOST}:${envn.DB_PORT}/${envn.DB_NAME}`;
+
+if ((process.env.NODE_ENV === 'development') || (process.env.NODE_ENV === 'test')) {
   connect_main = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
   connect_session = `mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/connect_mongodb_session`;
 }
