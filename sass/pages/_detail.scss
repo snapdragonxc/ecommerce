@@ -2,14 +2,16 @@
   margin-top: 3.5rem;
   margin-bottom: 5rem;
 
-  &__back-link {
-    display: block;
+  &__back {
     margin-bottom: 3rem;
+  }
+  &__back-link {
     text-decoration: none;
     font-size: 1.5rem;
     line-height: 1;
-    &:link {
-      color: $color-grey-dark;
+    &:hover {
+      cursor: pointer;
+      color: $color-grey-medium;
     }
   }
 
@@ -55,6 +57,13 @@
       font-size: 15px;
       padding: 15px;
       border: 0;
+      font-family: 'Raleway', sans-serif;
+      font-weight: 400;
+      text-transform: uppercase;
+      &:hover {
+        background-color: #111;
+        cursor: pointer;
+      }
     }
   }
 

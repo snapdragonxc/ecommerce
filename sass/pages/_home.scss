@@ -1,8 +1,8 @@
 .banner{
   position: relative;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  border: $border;
+  // margin-top: 2rem;
+  // margin-bottom: 2rem;
+  // border: $border;
   overflow: hidden;
   &__img { width: 100%; }
   &__caption {
@@ -53,5 +53,67 @@
     width: 8rem;
     margin: 0 auto;
     margin-bottom: 2rem;
+  }
+}
+
+.home__truncate {
+  overflow: hidden;
+  max-width: 938px;
+  border: $border;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.banner-resp{
+  &__caption {
+    display: none;
+    width: 100%;
+    padding: 2rem;
+    background-color: rgba(255, 255, 255, 0.65);
+    &-title {
+      font-size: 3rem;
+      font-weight: normal;
+      color: $color-grey-dark;
+      line-height: 1;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    &-txt {
+      font-size: 1.4rem;
+      font-weight: normal;
+      line-height: 1.5;
+      color: $color-grey-dark;
+      margin-bottom: 2rem;
+    }
+    &-btn {
+      margin-top: 3rem;
+      height: 4.3rem;
+      width: 100%;
+      text-align: center;
+      border: 1px solid #303030;
+      color: $color-grey-dark;
+      background-color: rgba(255, 255, 255, 0.65);
+      padding: 0px;
+    }
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .featured__product {
+    width: 75%;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 505px) {
+  .home__truncate {
+    display: none;
+  }
+  .banner-resp__caption {
+    display: block;
+  }
+  .featured__product {
+    width: 90%;
+    margin: 0 auto;
   }
 }

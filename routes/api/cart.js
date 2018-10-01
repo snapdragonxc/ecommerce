@@ -10,7 +10,18 @@ router.get('/', (req, res) => {
   return res.json(cart);
 });
 
-router.delete('/:_id', (req, res) => {
+router.delete('/all', (req, res) => {
+  req.session.cart = []; // empty
+  req.session.save((err) => {
+    if (err) {
+      res.status(500); // error updating cart
+      return res.send(err);
+    }
+    return res.send('cart is empty');
+  });
+});
+
+router.delete('/id/:_id', (req, res) => {
   const { _id } = req.params;
   const cart = req.session.cart || [];
   let items = cart;

@@ -2,17 +2,10 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import type { RouterHistory, Location, Match } from 'react-router';
 import { updateProduct, deleteProduct, getEditProducts } from '../../services/productService';
 import ProductsMng from './ProductsMng';
-import type { Location, History } from '../../PropTypes/Router';
 import type { Product } from '../../PropTypes/Shop';
-
-type Match = {
-  isExact: boolean,
-  params: {page: string, category: string},
-  path: string,
-  url: string,
-}
 
 type ProductsMngContainerState = {
   products: Array<Product>,
@@ -28,7 +21,7 @@ type ProductsMngContainerProps = {
   products: Array<Product>,
   pages: number,
   match: Match,
-  history: History,
+  history: RouterHistory,
   location: Location,
 }
 

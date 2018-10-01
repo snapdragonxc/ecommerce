@@ -6,7 +6,7 @@ module.exports = ({ name, password }) => (
   new Promise((resolve, reject) => {
       User.findOne({ username: name.toLowerCase() }, function (err, usr) {
         if (usr !== null) {
-          reject('A user with this name already exists');
+          reject(`A user with name ${name} already exists`);
         }
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(password, salt);

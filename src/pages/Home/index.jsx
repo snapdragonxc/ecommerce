@@ -2,10 +2,10 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import type { RouterHistory } from 'react-router';
 import { getDisplayProducts } from '../../actions/productActions';
 import Home from './Home';
 import type { Product } from '../../PropTypes/Shop';
-import type { History } from '../../PropTypes/Router';
 
 type HomeContainerState = {
   width: number,
@@ -16,7 +16,7 @@ type HomeContainerState = {
 type HomeContainerProps = {
   getDisplayProducts: () => void,
   products: Array<Product>,
-  history: History,
+  history: RouterHistory,
 }
 
 class HomeContainer extends Component<HomeContainerProps, HomeContainerState> {

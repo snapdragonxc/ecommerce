@@ -5,6 +5,7 @@ import {
   UPDATE_CART,
   ADD_TO_CART,
   DELETE_CART_ITEM,
+  DELETE_CART_ALL,
 } from '../constants';
 
 export function getCart(callback) {
@@ -53,8 +54,22 @@ export function saveCartItem(item, callback) { // update a simgle item
 export function deleteCartItem(item, callback) { // update a simgle item
   return async (dispatch) => {
     try {
-      const response = await axios.delete(`/api/cart/${item.product._id}`, item);
+      const response = await axios.delete(`/api/cart/id/${item.product._id}`, item);
       dispatch({ type: DELETE_CART_ITEM, items: response.data });
+      if (callback) {
+        callback();
+      }
+    } catch (err) {
+      throw (err);
+    }
+  };
+}
+
+export function deleteCartAll(callback) { // update a simgle item
+  return async (dispatch) => {
+    try {
+      const response = await axios.delete('/api/cart/all');
+      dispatch({ type: DELETE_CART_ALL, msg: response });
       if (callback) {
         callback();
       }

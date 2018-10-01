@@ -24,8 +24,8 @@ const Header = ({
 }: HeaderProps) => (
   <div>
     <section className="splash">
-        <span className="splash__email"><i className="fa fa-envelope" aria-hidden="true"></i>&nbsp;charm.accessories.au@gmail.com&nbsp;&nbsp;</span>
-        <span className="splash__phone"><i className="fa fa-phone" aria-hidden="true"></i>&nbsp;040310 6523</span>
+        <div className="splash__email"><i className="fa fa-envelope" aria-hidden="true"></i>&nbsp;charm.accessories.au@gmail.com&nbsp;&nbsp;</div>
+        <div className="splash__phone"><i className="fa fa-phone" aria-hidden="true"></i>&nbsp;040310 6523</div>
     </section>
     <div className="wrapper">
       <header>

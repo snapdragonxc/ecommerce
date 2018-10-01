@@ -18,7 +18,6 @@ type ShopProps = {
   curPage: number,
   max: number,
   onClickProduct: (string) => void,
-  showLoading: boolean,
 };
 
 const Shop = ({
@@ -32,13 +31,7 @@ const Shop = ({
   curPage,
   max,
   onClickProduct,
-  showLoading,
-}: ShopProps) => {
-  let loading = 'products__loading products__loading--hide';
-  if (showLoading) {
-    loading = 'products__loading products__loading--show';
-  }
-  return (
+}: ShopProps) => (
     <div className="wrapper">
       <section className="shop">
         <div className="row">
@@ -59,28 +52,33 @@ const Shop = ({
                       />
                     </li>))
                   }
-                  <div className="clearfix"></div>
                 </ul>
+                <div className="clearfix"></div>
               <div className="menu-line"></div>
             </div>
             <div className="products__ref sm-col-span-12 lg-col-span-9">
               <ul className="products">
-                <p className={loading}></p>
                 {
                   products.map(({
                     price,
                     name,
                     img,
                   }, index) => (
-                    <li key={index} className="products__item">
-                      <ProductItem
-                        price={price}
-                        name={name}
-                        src={ `${IMG_URL + img.slice(0, -4)}_thb.jpg`}
-                        onClickProduct={onClickProduct}
-                      />
-                    </li>))
-                }
+                    <div key={ index } >
+                      <li className="products__item">
+                        <ProductItem
+                          price={price}
+                          name={name}
+                          src={ `${IMG_URL + img.slice(0, -4)}_thb.jpg`}
+                          onClickProduct={onClickProduct}
+                        />
+                      </li>
+                      {
+                        (index + 1) % 3 === 0
+                        && <div className="clearfix"></div>
+                      }
+                    </div>
+                  ))}
                 <div className="clearfix"></div>
               </ul>
               <Paginator
@@ -94,6 +92,12 @@ const Shop = ({
             <div className="clearfix"></div>
         </div>
       </section>
-    </div>);
-};
+    </div>
+);
+
 export default Shop;
+
+/*  let loading = 'products__loading products__loading--hide';
+  if (showLoading) {
+    loading = 'products__loading products__loading--show';
+  } */

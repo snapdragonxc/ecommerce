@@ -29,7 +29,9 @@ const Detail = ({
 }: DetailProps) => (
   <div className="wrapper">
     <section className="detail">
-      <a className="detail__back-link" onClick={() => onClickBack()}><i className="fa fa-angle-left" aria-hidden="true"></i> Go Back</a>
+      <div className="detail__back">
+        <a className="detail__back-link" onClick={() => onClickBack()}><i className="fa fa-angle-left" aria-hidden="true"></i> Go Back</a>
+      </div>
       <div className="row">
           <div className="sm-col-span-12 lg-col-span-7">
             <div className="img">

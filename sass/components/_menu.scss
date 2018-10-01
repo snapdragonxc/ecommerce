@@ -11,3 +11,9 @@
   margin-bottom: 2rem;
   border-bottom: $border;
 }
+
+@media screen and (max-width: 770px) {
+  .menu-line {
+    width: 100%;
+  }
+}

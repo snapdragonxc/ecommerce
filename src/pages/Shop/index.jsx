@@ -2,18 +2,11 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import type { RouterHistory, Location, Match } from 'react-router';
 import { getProducts } from '../../actions/productActions';
 import { getCategories } from '../../actions/categoryActions';
 import Shop from './Shop';
-import type { Location, History } from '../../PropTypes/Router';
 import type { Category, Product } from '../../PropTypes/Shop';
-
-type Match = {
-  isExact: boolean,
-  params: {page: string, category: string},
-  path: string,
-  url: string,
-}
 
 type ShopContainerState = {
   curPage: number,
@@ -36,7 +29,7 @@ type ShopContainerProps = {
   category: string,
   showLoading: boolean,
   match: Match,
-  history: History,
+  history: RouterHistory,
   location: Location,
 }
 

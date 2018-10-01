@@ -4,6 +4,7 @@ import {
   CART_ERROR,
   ADD_TO_CART,
   DELETE_CART_ITEM,
+  DELETE_CART_ALL,
 } from '../constants';
 
 const totalAmount = arr => arr.map(item => Number(item.subTotal))
@@ -28,6 +29,13 @@ export default function cartReducer(state = {
         items: action.items,
         total: totalAmount(action.items),
         numberItems: totalQty(action.items),
+      };
+    case DELETE_CART_ALL:
+      return {
+        ...state,
+        items: [],
+        total: 0,
+        numberItems: 0,
       };
     case CART_ERROR:
       return {

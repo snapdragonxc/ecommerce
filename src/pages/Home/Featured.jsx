@@ -22,7 +22,7 @@ const Featured = ({
       </div>
       <figcaption className="figure__caption">
           <h3 className="figure__caption-name">{name}</h3>
-          <p className="figure__caption-price">${price}</p>
+          <p className="figure__caption-price">${Number(price).toFixed(2)}</p>
       </figcaption>
     </figure>
   </div>

@@ -3,7 +3,7 @@
 }
 
 .category {
-  width: 17rem;
+  max-width: 17rem;
   list-style-type: none;
   margin-bottom: 2rem;
   &__item { width: 100%; }
@@ -28,7 +28,7 @@
 .products {
   list-style-type: none;
   margin: -15px;
-  min-height: 300px;
+  //min-height: 300px;
   position: relative;
   &__item {
     float: left;
@@ -48,6 +48,26 @@
     }
     &--show {
       visibility: visible;
+    }
+  }
+}
+
+@media screen and (max-width: 770px) {
+  .category {
+    max-width: 100%;
+    &__item {
+      border-bottom: 1px solid #f0f0f0;
+      &:last-child {
+        border: 0;
+      }
+    }
+  }
+
+  .products {
+    &__item {
+      width: 75%;
+      margin: 0 auto;
+      float: none;
     }
   }
 }

@@ -2,20 +2,13 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import type { RouterHistory, Location, Match } from 'react-router';
 import { getProduct, updateProduct, createProduct } from '../../services/productService';
 import Verify from '../../services/verify';
 import { getCategories } from '../../actions/categoryActions';
 import Edit from './Edit';
 import { IMG_URL } from '../../constants';
-import type { Location, History } from '../../PropTypes/Router';
 import type { Product, Category } from '../../PropTypes/Shop';
-
-type Match = {
-  isExact: boolean,
-  params: {id: string},
-  path: string,
-  url: string,
-}
 
 type Error = {
   name?: string,
@@ -52,7 +45,7 @@ type EditContainerProps = {
   fetchCategories: boolean,
   pages: number,
   match: Match,
-  history: History,
+  history: RouterHistory,
   location: Location,
 }
 

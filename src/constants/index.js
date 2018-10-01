@@ -19,6 +19,7 @@ export const UPDATE_CART = 'UPDATE_CART';
 export const DELETE_CART_ITEM = 'DELETE_CART_ITEM';
 export const ADD_TO_CART = 'ADD_TO_CART';
 export const CART_ERROR = 'CART_ERROR';
+export const DELETE_CART_ALL = 'DELETE_CART_ALL';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';

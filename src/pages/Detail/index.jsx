@@ -1,19 +1,12 @@
 // @flow
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import type { RouterHistory, Match } from 'react-router';
 import { saveCartItem } from '../../actions/cartActions';
 import { getProducts } from '../../actions/productActions';
 import { getProductByName } from '../../services/productService';
 import Detail from './Detail';
-import type { History } from '../../PropTypes/Router';
 import type { Product } from '../../PropTypes/Shop';
-
-type Match = {
-  isExact: boolean,
-  params: {name: string},
-  path: string,
-  url: string,
-}
 
 type Item = {
   product: Product,
@@ -32,7 +25,7 @@ type DetailContainerProps = {
   showLoading: boolean,
   saveCartItem: (item: Item, () => void) => void,
   match: Match,
-  history: History,
+  history: RouterHistory,
 }
 
 class DetailContainer extends Component<DetailContainerProps, DetailContainerState> {

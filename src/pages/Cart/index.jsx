@@ -2,9 +2,17 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getCart, updateCartItem, deleteCartItem } from '../../actions/cartActions';
+import type { RouterHistory } from 'react-router';
+import {
+  getCart,
+  updateCartItem,
+  deleteCartItem,
+  deleteCartAll,
+} from '../../actions/cartActions';
 import Cart from './Cart';
+import CartMessage from './CartMessage';
 import type { Product } from '../../PropTypes/Shop';
+
 
 type Item = {
   product: Product,
@@ -16,6 +24,7 @@ type CartContainerState = {
   items: Array<Item>,
   total: number,
   numberItems: number,
+  message: string,
 };
 
 type CartContainerProps = {
@@ -26,6 +35,8 @@ type CartContainerProps = {
   getCart: (callback: () => void) => void,
   updateCartItem: (item: Item, callback: () => void) => void,
   deleteCartItem: (item: Item, callback: () => void) => void,
+  deleteCartAll: (callback?: () => void) => void,
+  history: RouterHistory,
 };
 
 class CartContainer extends Component<CartContainerProps, CartContainerState> {
@@ -35,21 +46,34 @@ class CartContainer extends Component<CartContainerProps, CartContainerState> {
       items: [],
       total: 0,
       numberItems: 0,
+      message: '',
     };
     this.addQty = this.addQty.bind(this);
     this.subQty = this.subQty.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.goBack = this.goBack.bind(this);
+    this.onPay = this.onPay.bind(this);
   }
 
   componentDidMount() {
     if (this.props.cart.items.length === 0) {
       this.props.getCart(() => {
         const { items, total, numberItems } = this.props.cart;
-        this.setState({ items, total, numberItems });
+        this.setState({
+          items,
+          total,
+          numberItems,
+          message: '',
+        });
       });
     } else {
       const { items, total, numberItems } = this.props.cart;
-      this.setState({ items, total, numberItems });
+      this.setState({
+        items,
+        total,
+        numberItems,
+        message: '',
+      });
     }
   }
 
@@ -89,8 +113,32 @@ class CartContainer extends Component<CartContainerProps, CartContainerState> {
     }
   }
 
+  onPay: () => void
+
+  onPay() {
+    this.props.deleteCartAll();
+    this.setState({ message: 'Payment successful' });
+  }
+
+  goBack: () => void
+
+  goBack() {
+    this.props.history.goBack();
+  }
+
   render() {
-    const { items, total, numberItems } = this.state;
+    const {
+      items,
+      total,
+      numberItems,
+      message,
+    } = this.state;
+    if (message !== '') {
+      return <CartMessage goBack={this.goBack} message={message}/>;
+    }
+    if (numberItems === 0) {
+      return <CartMessage goBack={this.goBack} message='Your cart is empty'/>;
+    }
     return (
       <Cart
         items={items}
@@ -99,6 +147,7 @@ class CartContainer extends Component<CartContainerProps, CartContainerState> {
         addQty={this.addQty}
         subQty={this.subQty}
         onDelete={this.onDelete}
+        onPay={this.onPay}
       />
     );
   }
@@ -108,6 +157,7 @@ const mapDispatchToProps = dispatch => ({
   getCart: callback => dispatch(getCart(callback)),
   updateCartItem: (item, callback) => dispatch(updateCartItem(item, callback)),
   deleteCartItem: (item, callback) => dispatch(deleteCartItem(item, callback)),
+  deleteCartAll: callback => dispatch(deleteCartAll(callback)),
 });
 
 const mapStateToProps = state => ({ cart: state.cart });
